@@ -1,0 +1,6 @@
+name: "lmms-eval"
+description: "lmms-eval multimodal LLM evaluation suite — image, video, and audio benchmarks"
+version: "1.0.0"
+tasks:
+  - name: mmmu-val
+    environment: lmms-eval

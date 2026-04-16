@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" style="max-width: 100%; height: auto; font-family: 'Inter', system-ui, sans-serif" role="img" aria-label="Donut chart showing OpenEval's benchmark coverage across 6 domains: Tool Calling, Web Interaction, Software Engineering, Multimodal, Knowledge, and Customer Service">
+  <title>OpenEval Benchmark Coverage by Domain</title>
+  <desc>Donut chart showing 8 benchmarks across 6 evaluation domains. Tool Calling (MCPMark, Toolathlon), Web Interaction (WebArena, BrowseComp), Software Engineering (SWE-bench Pro), Multimodal (lmms-eval), Knowledge (xbench), Customer Service (tau2-bench). Source: OpenEval v0.4.</desc>
+
+  <!-- Title -->
+  <text x="280" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2937">Benchmark Coverage by Domain</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#1f2937" opacity="0.45">8 benchmarks across 6 evaluation domains</text>
+
+  <!-- Donut chart - centered at 200, 220, radius 120, inner 65 -->
+  <!-- Tool Calling: 2/8 = 25% = 90deg, starts at -90 -->
+  <path d="M 200 100 A 120 120 0 0 1 320 220 L 265 220 A 65 65 0 0 0 200 155 Z" fill="#f97316" />
+  <!-- Web Interaction: 2/8 = 25% = 90deg -->
+  <path d="M 320 220 A 120 120 0 0 1 200 340 L 200 285 A 65 65 0 0 0 265 220 Z" fill="#38bdf8" />
+  <!-- Software Eng: 1/8 = 12.5% = 45deg -->
+  <path d="M 200 340 A 120 120 0 0 0 115.147 305.147 L 147.538 272.538 A 65 65 0 0 1 200 285 Z" fill="#a78bfa" />
+  <!-- Multimodal: 1/8 = 12.5% = 45deg -->
+  <path d="M 115.147 305.147 A 120 120 0 0 0 80 220 L 135 220 A 65 65 0 0 1 147.538 272.538 Z" fill="#22c55e" />
+  <!-- Knowledge: 1/8 = 12.5% = 45deg -->
+  <path d="M 80 220 A 120 120 0 0 0 115.147 134.853 L 147.538 167.462 A 65 65 0 0 1 135 220 Z" fill="#facc15" />
+  <!-- Customer Service: 1/8 = 12.5% = 45deg -->
+  <path d="M 115.147 134.853 A 120 120 0 0 0 200 100 L 200 155 A 65 65 0 0 1 147.538 167.462 Z" fill="#fb7185" />
+
+  <!-- Center text -->
+  <text x="200" y="215" text-anchor="middle" font-size="28" font-weight="800" fill="#1f2937">8</text>
+  <text x="200" y="235" text-anchor="middle" font-size="11" fill="#1f2937" opacity="0.6">Benchmarks</text>
+
+  <!-- Legend -->
+  <rect x="355" y="88" width="12" height="12" rx="2" fill="#f97316" />
+  <text x="373" y="99" font-size="11" font-weight="600" fill="#1f2937">Tool Calling (25%)</text>
+  <text x="373" y="113" font-size="9" fill="#1f2937" opacity="0.6">MCPMark · Toolathlon</text>
+
+  <rect x="355" y="128" width="12" height="12" rx="2" fill="#38bdf8" />
+  <text x="373" y="139" font-size="11" font-weight="600" fill="#1f2937">Web Interaction (25%)</text>
+  <text x="373" y="153" font-size="9" fill="#1f2937" opacity="0.6">WebArena · BrowseComp</text>
+
+  <rect x="355" y="168" width="12" height="12" rx="2" fill="#a78bfa" />
+  <text x="373" y="179" font-size="11" font-weight="600" fill="#1f2937">Software Eng (12.5%)</text>
+  <text x="373" y="193" font-size="9" fill="#1f2937" opacity="0.6">SWE-bench Pro (731 tasks)</text>
+
+  <rect x="355" y="208" width="12" height="12" rx="2" fill="#22c55e" />
+  <text x="373" y="219" font-size="11" font-weight="600" fill="#1f2937">Multimodal (12.5%)</text>
+  <text x="373" y="233" font-size="9" fill="#1f2937" opacity="0.6">lmms-eval (70+ image, 30+ video)</text>
+
+  <rect x="355" y="248" width="12" height="12" rx="2" fill="#facc15" />
+  <text x="373" y="259" font-size="11" font-weight="600" fill="#1f2937">Knowledge (12.5%)</text>
+  <text x="373" y="273" font-size="9" fill="#1f2937" opacity="0.6">xbench (contamination-free)</text>
+
+  <rect x="355" y="288" width="12" height="12" rx="2" fill="#fb7185" />
+  <text x="373" y="299" font-size="11" font-weight="600" fill="#1f2937">Customer Service (12.5%)</text>
+  <text x="373" y="313" font-size="9" fill="#1f2937" opacity="0.6">tau2-bench (5 domains)</text>
+
+  <!-- Source -->
+  <text x="280" y="430" text-anchor="middle" font-size="10" fill="#1f2937" opacity="0.35">Source: OpenEval v0.4 Integrated Benchmarks</text>
+</svg>

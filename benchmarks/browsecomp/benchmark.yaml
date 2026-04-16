@@ -1,0 +1,6 @@
+name: "browsecomp"
+description: "BrowseComp — A Simple Yet Challenging Benchmark for Browsing Agents"
+version: "1.0.0"
+tasks:
+  - name: default
+    environment: browsecomp

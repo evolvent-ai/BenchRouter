@@ -1,0 +1,13 @@
+name: "mcpmark-pg"
+command: "python /app/benchmark/run_mcpmark.py"
+description: "MCPMark PostgreSQL benchmark"
+timeout: 7200
+docker: true
+docker_images:
+  - "pgvector/pgvector:0.8.0-pg17-bookworm"
+extra_env:
+  POSTGRES_HOST: "localhost"
+  POSTGRES_PORT: "5432"
+  POSTGRES_USERNAME: "postgres"
+  POSTGRES_PASSWORD: "password"
+  POSTGRES_DATABASE: "postgres"

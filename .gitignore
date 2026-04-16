@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.env
+.DS_Store
+*.tar
+benchmarks/webarena/environments/webarena-shopping-admin/webarena-src/

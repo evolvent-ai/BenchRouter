@@ -1,0 +1,14 @@
+name: "tau2-bench"
+description: "Tau2 benchmark domains integrated via BenchRouter bridge (full-featured)"
+version: "0.2.0"
+tasks:
+  - name: tau2-airline
+    environment: tau2-bench
+  - name: tau2-retail
+    environment: tau2-bench
+  - name: tau2-telecom
+    environment: tau2-bench
+  - name: tau2-banking-knowledge
+    environment: tau2-bench
+  - name: tau2-mock
+    environment: tau2-bench

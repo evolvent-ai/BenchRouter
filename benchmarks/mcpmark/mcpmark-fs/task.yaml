@@ -1,0 +1,4 @@
+name: "mcpmark-fs"
+command: "python /app/benchmark/run_mcpmark.py"
+description: "MCPMark filesystem benchmark — multi-turn agentic eval with MCP tool calling"
+timeout: 3600

@@ -1,0 +1,1 @@
+FROM benchrouter-browsecomp:latest

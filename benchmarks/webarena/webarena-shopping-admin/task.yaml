@@ -1,0 +1,10 @@
+name: "webarena-shopping-admin"
+command: "python /app/benchmark/run_webarena.py"
+description: "WebArena Shopping Admin tasks (182 tasks, Magento CMS)"
+timeout: 64800
+docker: true
+docker_images:
+  - "shopping_admin_final_0719"
+extra_env:
+  SHOPPING_ADMIN: "http://localhost:7780/admin"
+  WEBARENA_TASK_LIMIT: "0"

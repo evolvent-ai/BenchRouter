@@ -1,0 +1,1 @@
+FROM evalsysorg/mcpmark:latest

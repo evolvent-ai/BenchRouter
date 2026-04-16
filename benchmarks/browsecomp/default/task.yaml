@@ -1,0 +1,4 @@
+name: "browsecomp"
+command: "python /app/benchmark/run_browsecomp.py"
+description: "BrowseComp — benchmark for browsing agents from OpenAI simple-evals"
+timeout: 14400

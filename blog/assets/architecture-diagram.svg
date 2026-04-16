@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520" style="max-width: 100%; height: auto; font-family: 'Inter', system-ui, sans-serif" role="img" aria-label="OpenEval architecture diagram showing CLI, FastAPI server, scheduler, registry, and Docker execution layer">
+  <title>OpenEval System Architecture</title>
+  <desc>Architecture diagram showing the flow from CLI through FastAPI server to the scheduler and registry components, which manage Docker-based task execution with three modes: simple containers, sidecar orchestration, and Docker-in-Docker.</desc>
+
+  <!-- Background regions -->
+  <!-- User Layer -->
+  <rect x="20" y="20" width="660" height="60" rx="10" fill="#f97316" opacity="0.1" stroke="#f97316" opacity="0.3" stroke-width="1" />
+  <text x="40" y="55" font-size="14" font-weight="700" fill="#f97316">User Layer</text>
+
+  <rect x="180" y="30" width="200" height="40" rx="8" fill="#f97316" opacity="0.15" stroke="#f97316" stroke-width="1.5" />
+  <text x="280" y="55" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">CLI (Typer)</text>
+
+  <text x="460" y="55" font-size="11" fill="#1f2937" opacity="0.6">openeval run mcpmark --model gpt-4</text>
+
+  <!-- Arrow -->
+  <line x1="280" y1="70" x2="280" y2="100" stroke="#1f2937" opacity="0.4" stroke-width="1.5" />
+  <polygon points="275,98 280,108 285,98" fill="#1f2937" opacity="0.4" />
+  <text x="290" y="92" font-size="9" fill="#1f2937" opacity="0.5">HTTP</text>
+
+  <!-- Server Layer -->
+  <rect x="20" y="110" width="660" height="70" rx="10" fill="#38bdf8" opacity="0.08" stroke="#38bdf8" opacity="0.3" stroke-width="1" />
+  <text x="40" y="140" font-size="14" font-weight="700" fill="#38bdf8">API Layer</text>
+
+  <rect x="180" y="120" width="200" height="50" rx="8" fill="#38bdf8" opacity="0.15" stroke="#38bdf8" stroke-width="1.5" />
+  <text x="280" y="142" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">FastAPI Server</text>
+  <text x="280" y="158" text-anchor="middle" font-size="10" fill="#1f2937" opacity="0.6">/runs /evals /benchmarks /compare</text>
+
+  <!-- Arrows to Scheduler and Registry -->
+  <line x1="230" y1="170" x2="170" y2="210" stroke="#1f2937" opacity="0.4" stroke-width="1.5" />
+  <polygon points="165,207 172,215 178,207" fill="#1f2937" opacity="0.4" />
+  <line x1="330" y1="170" x2="460" y2="210" stroke="#1f2937" opacity="0.4" stroke-width="1.5" />
+  <polygon points="455,207 462,215 468,207" fill="#1f2937" opacity="0.4" />
+
+  <!-- Core Layer -->
+  <rect x="20" y="200" width="660" height="90" rx="10" fill="#a78bfa" opacity="0.08" stroke="#a78bfa" opacity="0.3" stroke-width="1" />
+  <text x="40" y="228" font-size="14" font-weight="700" fill="#a78bfa">Core Layer</text>
+
+  <!-- Scheduler -->
+  <rect x="80" y="215" width="200" height="65" rx="8" fill="#a78bfa" opacity="0.15" stroke="#a78bfa" stroke-width="1.5" />
+  <text x="180" y="238" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">EvalScheduler</text>
+  <text x="180" y="253" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.6">Run + Job model</text>
+  <text x="180" y="265" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.6">Parallel exec · Aggregation</text>
+
+  <!-- Registry -->
+  <rect x="380" y="215" width="200" height="65" rx="8" fill="#a78bfa" opacity="0.15" stroke="#a78bfa" stroke-width="1.5" />
+  <text x="480" y="238" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Registry</text>
+  <text x="480" y="253" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.6">File-based storage</text>
+  <text x="480" y="265" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.6">benchmarks/ envs/ runs/ results/</text>
+
+  <!-- Arrow to Docker -->
+  <line x1="180" y1="280" x2="180" y2="310" stroke="#1f2937" opacity="0.4" stroke-width="1.5" />
+  <polygon points="175,308 180,318 185,308" fill="#1f2937" opacity="0.4" />
+
+  <!-- Docker Layer -->
+  <rect x="20" y="320" width="660" height="180" rx="10" fill="#22c55e" opacity="0.08" stroke="#22c55e" opacity="0.3" stroke-width="1" />
+  <text x="40" y="348" font-size="14" font-weight="700" fill="#22c55e">Docker Execution Layer</text>
+
+  <!-- Three execution modes -->
+  <!-- Simple -->
+  <rect x="40" y="360" width="180" height="120" rx="8" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1" />
+  <text x="130" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#1f2937">Simple Mode</text>
+  <text x="130" y="400" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Single container</text>
+  <text x="130" y="415" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">/app/benchmark (ro)</text>
+  <text x="130" y="430" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">/app/results (rw)</text>
+  <text x="130" y="448" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">xbench · BrowseComp</text>
+  <text x="130" y="460" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">lmms-eval</text>
+
+  <!-- Sidecar -->
+  <rect x="240" y="360" width="200" height="120" rx="8" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1" />
+  <text x="340" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#1f2937">Sidecar Mode</text>
+  <text x="340" y="400" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Auto Docker Compose</text>
+  <text x="340" y="415" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Healthchecks · post_start</text>
+  <text x="340" y="430" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">DB · Web · MCP servers</text>
+  <text x="340" y="448" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">MCPMark (Postgres, PW)</text>
+  <text x="340" y="460" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">tau2-bench</text>
+
+  <!-- DinD -->
+  <rect x="460" y="360" width="200" height="120" rx="8" fill="#22c55e" opacity="0.12" stroke="#22c55e" stroke-width="1" />
+  <text x="560" y="383" text-anchor="middle" font-size="12" font-weight="600" fill="#1f2937">DinD Mode</text>
+  <text x="560" y="400" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Isolated Docker daemon</text>
+  <text x="560" y="415" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Sysbox / --privileged</text>
+  <text x="560" y="430" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.7">Image pre-caching</text>
+  <text x="560" y="448" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">SWE-bench Pro</text>
+  <text x="560" y="460" text-anchor="middle" font-size="9" fill="#1f2937" opacity="0.5">WebArena · Toolathlon</text>
+
+  <!-- Source -->
+  <text x="350" y="515" text-anchor="middle" font-size="10" fill="#1f2937" opacity="0.35">OpenEval v0.4 Architecture — Three Docker Execution Modes</text>
+</svg>

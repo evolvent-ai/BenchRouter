@@ -1,0 +1,7 @@
+name: "scienceqa"
+command: "python /app/benchmark/run_xbench.py"
+description: "xbench ScienceQA — fundamental knowledge across scientific domains"
+timeout: 7200
+extra_env:
+  XBENCH_DATASET: "data/ScienceQA.csv"
+  XBENCH_N_REPEATS: "1"

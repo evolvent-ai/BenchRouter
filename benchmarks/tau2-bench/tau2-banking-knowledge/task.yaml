@@ -1,0 +1,6 @@
+name: "tau2-banking-knowledge"
+command: "python /app/benchmark/run_tau2.py"
+description: "Tau2 banking_knowledge domain"
+timeout: 21600
+extra_env:
+  TAU2_DOMAIN: "banking_knowledge"

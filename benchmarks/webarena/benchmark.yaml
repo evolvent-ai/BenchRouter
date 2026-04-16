@@ -1,0 +1,6 @@
+name: "webarena"
+description: "WebArena web interaction benchmark — LLM agent uses Playwright to interact with web apps"
+version: "1.0.0"
+tasks:
+  - name: webarena-shopping-admin
+    environment: webarena-shopping-admin

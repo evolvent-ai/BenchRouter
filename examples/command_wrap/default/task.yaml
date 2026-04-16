@@ -1,0 +1,6 @@
+name: "wrapped-bench-default"
+command: "python existing_benchmark.py"
+description: "Example of wrapping an existing benchmark with minimal changes"
+result_file: "scores.json"
+result_mapping:
+  overall: "pass@1"

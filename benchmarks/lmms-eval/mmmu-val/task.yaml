@@ -1,0 +1,6 @@
+name: "mmmu-val"
+command: "python /app/benchmark/run_lmms_eval.py"
+description: "MMMU validation set — massive multi-discipline multimodal understanding"
+timeout: 7200
+extra_env:
+  LMMS_EVAL_TASK: "mmmu_val"

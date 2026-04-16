@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" style="max-width: 100%; height: auto; font-family: 'Inter', -apple-system, system-ui, sans-serif" role="img" aria-label="BenchRouter core design: zero-adaptation LLM evaluation via containerized benchmark routing">
+  <title>BenchRouter Core Design</title>
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="routerGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="modelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="simpleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="sidecarGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="dindGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="contractGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e0e7ff"/>
+      <stop offset="100%" stop-color="#ede9fe"/>
+    </linearGradient>
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadowDeep" x="-4%" y="-4%" width="108%" height="116%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="720" fill="#fafbfc" rx="0"/>
+
+  <!-- ==================== TITLE ==================== -->
+  <text x="480" y="38" text-anchor="middle" font-size="20" font-weight="800" fill="#1e1b4b" letter-spacing="-0.5">BenchRouter — Core Design</text>
+  <text x="480" y="58" text-anchor="middle" font-size="12" fill="#6b7280">Zero-Adaptation LLM Evaluation via Containerized Benchmark Routing</text>
+
+  <!-- ==================== MODEL LAYER (TOP) ==================== -->
+  <text x="50" y="95" font-size="11" font-weight="700" fill="#92400e" letter-spacing="1">MODELS</text>
+  <line x1="105" y1="91" x2="910" y2="91" stroke="#f59e0b" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Model boxes -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="105" width="120" height="38" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.2"/>
+    <circle cx="98" cy="124" r="8" fill="url(#modelGrad)" opacity="0.15"/>
+    <text x="98" y="128" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">G</text>
+    <text x="150" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#1f2937">GPT-4o</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="220" y="105" width="120" height="38" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.2"/>
+    <circle cx="238" cy="124" r="8" fill="url(#modelGrad)" opacity="0.15"/>
+    <text x="238" y="128" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">C</text>
+    <text x="290" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#1f2937">Claude</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="360" y="105" width="120" height="38" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.2"/>
+    <circle cx="378" cy="124" r="8" fill="url(#modelGrad)" opacity="0.15"/>
+    <text x="378" y="128" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">D</text>
+    <text x="430" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#1f2937">DeepSeek</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="500" y="105" width="120" height="38" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.2"/>
+    <circle cx="518" cy="124" r="8" fill="url(#modelGrad)" opacity="0.15"/>
+    <text x="518" y="128" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">Q</text>
+    <text x="570" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#1f2937">Qwen</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="640" y="105" width="120" height="38" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.2"/>
+    <circle cx="658" cy="124" r="8" fill="url(#modelGrad)" opacity="0.15"/>
+    <text x="658" y="128" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">v</text>
+    <text x="710" y="128" text-anchor="middle" font-size="11" font-weight="600" fill="#1f2937">vLLM / Any</text>
+  </g>
+
+  <!-- Protocol label -->
+  <rect x="780" y="108" width="135" height="32" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="847" y="129" text-anchor="middle" font-size="10" fill="#92400e" font-weight="600">OpenAI-compatible API</text>
+
+  <!-- Down arrows from models -->
+  <line x1="140" y1="143" x2="420" y2="185" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="280" y1="143" x2="430" y2="185" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="420" y1="143" x2="450" y2="185" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="560" y1="143" x2="470" y2="185" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="700" y1="143" x2="490" y2="185" stroke="#d1d5db" stroke-width="1"/>
+
+  <!-- ==================== BENCHROUTER CORE (CENTER) ==================== -->
+  <g filter="url(#shadowDeep)">
+    <rect x="280" y="185" width="400" height="100" rx="16" fill="url(#routerGrad)"/>
+    <!-- Inner glow -->
+    <rect x="284" y="189" width="392" height="92" rx="14" fill="none" stroke="white" stroke-width="0.5" opacity="0.2"/>
+  </g>
+
+  <!-- Router icon -->
+  <g transform="translate(310, 210)">
+    <!-- Router symbol: circle with arrows radiating -->
+    <circle cx="18" cy="18" r="16" fill="white" opacity="0.2"/>
+    <circle cx="18" cy="18" r="4" fill="white" opacity="0.9"/>
+    <line x1="18" y1="4" x2="18" y2="14" stroke="white" stroke-width="1.5" opacity="0.7"/>
+    <line x1="18" y1="22" x2="18" y2="32" stroke="white" stroke-width="1.5" opacity="0.7"/>
+    <line x1="4" y1="18" x2="14" y2="18" stroke="white" stroke-width="1.5" opacity="0.7"/>
+    <line x1="22" y1="18" x2="32" y2="18" stroke="white" stroke-width="1.5" opacity="0.7"/>
+    <line x1="8" y1="8" x2="14" y2="14" stroke="white" stroke-width="1.2" opacity="0.5"/>
+    <line x1="22" y1="22" x2="28" y2="28" stroke="white" stroke-width="1.2" opacity="0.5"/>
+    <line x1="28" y1="8" x2="22" y2="14" stroke="white" stroke-width="1.2" opacity="0.5"/>
+    <line x1="8" y1="28" x2="14" y2="22" stroke="white" stroke-width="1.2" opacity="0.5"/>
+  </g>
+
+  <text x="360" y="225" font-size="18" font-weight="800" fill="white" letter-spacing="-0.3">BenchRouter</text>
+  <text x="360" y="243" font-size="11" fill="white" opacity="0.85">Scheduler + Registry + SDK Runner</text>
+
+  <!-- Key stats inside router -->
+  <g transform="translate(360, 253)">
+    <rect x="0" y="0" width="70" height="20" rx="4" fill="white" opacity="0.15"/>
+    <text x="35" y="14" text-anchor="middle" font-size="9" fill="white" font-weight="600">8 benchmarks</text>
+  </g>
+  <g transform="translate(440, 253)">
+    <rect x="0" y="0" width="65" height="20" rx="4" fill="white" opacity="0.15"/>
+    <text x="32" y="14" text-anchor="middle" font-size="9" fill="white" font-weight="600">6 domains</text>
+  </g>
+  <g transform="translate(515, 253)">
+    <rect x="0" y="0" width="65" height="20" rx="4" fill="white" opacity="0.15"/>
+    <text x="32" y="14" text-anchor="middle" font-size="9" fill="white" font-weight="600">3 modes</text>
+  </g>
+  <g transform="translate(590, 253)">
+    <rect x="0" y="0" width="75" height="20" rx="4" fill="white" opacity="0.15"/>
+    <text x="37" y="14" text-anchor="middle" font-size="9" fill="white" font-weight="600">0 adaptation</text>
+  </g>
+
+  <!-- ==================== MINIMAL CONTRACT (LEFT SIDE) ==================== -->
+  <g filter="url(#shadow)">
+    <rect x="30" y="190" width="230" height="90" rx="12" fill="url(#contractGrad)" stroke="#c7d2fe" stroke-width="1"/>
+  </g>
+  <text x="50" y="212" font-size="11" font-weight="700" fill="#4338ca">Minimal Contract</text>
+  <text x="50" y="228" font-size="10" fill="#6366f1" opacity="0.8">Zero framework code required</text>
+
+  <!-- YAML icon + label -->
+  <rect x="50" y="238" width="50" height="16" rx="3" fill="#6366f1" opacity="0.12"/>
+  <text x="75" y="250" text-anchor="middle" font-size="8" fill="#4338ca" font-weight="700">.yaml</text>
+  <text x="108" y="250" font-size="9" fill="#374151">benchmark.yaml</text>
+
+  <rect x="50" y="256" width="50" height="16" rx="3" fill="#6366f1" opacity="0.12"/>
+  <text x="75" y="268" text-anchor="middle" font-size="8" fill="#4338ca" font-weight="700">.yaml</text>
+  <text x="108" y="268" font-size="9" fill="#374151">task.yaml</text>
+
+  <rect x="170" y="238" width="50" height="16" rx="3" fill="#6366f1" opacity="0.12"/>
+  <text x="195" y="250" text-anchor="middle" font-size="8" fill="#4338ca" font-weight="700">script</text>
+  <text x="170" y="268" font-size="9" fill="#374151">eval.py / .sh</text>
+
+  <!-- Arrow from contract to router -->
+  <path d="M 260 235 L 278 235" stroke="#6366f1" stroke-width="1.2" fill="none" marker-end="url(#arrowPurple)"/>
+  <defs>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6366f1"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== RESULT STANDARDIZATION (RIGHT SIDE) ==================== -->
+  <g filter="url(#shadow)">
+    <rect x="700" y="190" width="230" height="90" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+  </g>
+  <text x="720" y="212" font-size="11" font-weight="700" fill="#166534">Standardized Output</text>
+  <text x="720" y="228" font-size="10" fill="#16a34a" opacity="0.8">result_mapping auto-translates</text>
+
+  <!-- JSON output example -->
+  <rect x="720" y="237" width="190" height="34" rx="4" fill="#1e293b"/>
+  <text x="730" y="251" font-size="8.5" fill="#a5f3fc" font-family="'JetBrains Mono', 'SF Mono', monospace">{"overall": 0.85,</text>
+  <text x="730" y="264" font-size="8.5" fill="#a5f3fc" font-family="'JetBrains Mono', 'SF Mono', monospace"> "raw_metrics": {...}}</text>
+
+  <!-- Arrow from router to result -->
+  <path d="M 682 235 L 698 235" stroke="#16a34a" stroke-width="1.2" fill="none" marker-end="url(#arrowGreen)"/>
+  <defs>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== ROUTING ARROWS DOWN ==================== -->
+  <!-- Three diverging arrows from router to execution modes -->
+  <path d="M 380 285 C 380 310, 170 320, 170 345" stroke="#10b981" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M 480 285 C 480 310, 480 320, 480 345" stroke="#3b82f6" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M 580 285 C 580 310, 790 320, 790 345" stroke="#ef4444" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Route labels on arrows -->
+  <text x="255" y="318" text-anchor="middle" font-size="8" fill="#6b7280" font-style="italic">route</text>
+  <text x="485" y="318" text-anchor="middle" font-size="8" fill="#6b7280" font-style="italic">route</text>
+  <text x="700" y="318" text-anchor="middle" font-size="8" fill="#6b7280" font-style="italic">route</text>
+
+  <!-- ==================== THREE EXECUTION MODES ==================== -->
+  <text x="50" y="358" font-size="11" font-weight="700" fill="#374151" letter-spacing="1">EXECUTION MODES</text>
+  <line x1="175" y1="354" x2="910" y2="354" stroke="#e5e7eb" stroke-width="0.5"/>
+
+  <!-- === SIMPLE MODE === -->
+  <g filter="url(#shadowDeep)">
+    <rect x="40" y="372" width="260" height="198" rx="12" fill="white" stroke="#10b981" stroke-width="1.5"/>
+    <!-- Header -->
+    <rect x="40" y="372" width="260" height="36" rx="12" fill="url(#simpleGrad)"/>
+    <rect x="40" y="396" width="260" height="12" fill="url(#simpleGrad)"/>
+  </g>
+  <text x="170" y="396" text-anchor="middle" font-size="13" font-weight="700" fill="white">Simple Mode</text>
+
+  <!-- Container diagram -->
+  <rect x="70" y="420" width="200" height="70" rx="6" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1"/>
+  <text x="170" y="438" text-anchor="middle" font-size="10" font-weight="600" fill="#065f46">Container</text>
+  <rect x="85" y="446" width="80" height="16" rx="3" fill="#d1fae5"/>
+  <text x="125" y="457" text-anchor="middle" font-size="8" fill="#065f46">/app/benchmark</text>
+  <rect x="175" y="446" width="80" height="16" rx="3" fill="#d1fae5"/>
+  <text x="215" y="457" text-anchor="middle" font-size="8" fill="#065f46">SDK runner</text>
+  <rect x="85" y="466" width="170" height="16" rx="3" fill="#d1fae5"/>
+  <text x="170" y="477" text-anchor="middle" font-size="8" fill="#065f46">result.json → /app/results</text>
+
+  <text x="170" y="510" text-anchor="middle" font-size="9" fill="#6b7280">16 GB RAM · 4 CPU</text>
+
+  <!-- Benchmark tags -->
+  <rect x="58" y="524" width="55" height="18" rx="4" fill="#f0fdf4" stroke="#a7f3d0" stroke-width="0.8"/>
+  <text x="85" y="536" text-anchor="middle" font-size="8" fill="#065f46" font-weight="600">xbench</text>
+  <rect x="120" y="524" width="75" height="18" rx="4" fill="#f0fdf4" stroke="#a7f3d0" stroke-width="0.8"/>
+  <text x="157" y="536" text-anchor="middle" font-size="8" fill="#065f46" font-weight="600">BrowseComp</text>
+  <rect x="202" y="524" width="75" height="18" rx="4" fill="#f0fdf4" stroke="#a7f3d0" stroke-width="0.8"/>
+  <text x="239" y="536" text-anchor="middle" font-size="8" fill="#065f46" font-weight="600">lmms-eval</text>
+  <text x="170" y="560" text-anchor="middle" font-size="8" fill="#9ca3af">Single container, direct execution</text>
+
+  <!-- === SIDECAR MODE === -->
+  <g filter="url(#shadowDeep)">
+    <rect x="330" y="372" width="300" height="198" rx="12" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="330" y="372" width="300" height="36" rx="12" fill="url(#sidecarGrad)"/>
+    <rect x="330" y="396" width="300" height="12" fill="url(#sidecarGrad)"/>
+  </g>
+  <text x="480" y="396" text-anchor="middle" font-size="13" font-weight="700" fill="white">Sidecar Mode</text>
+
+  <!-- Docker Compose network -->
+  <rect x="350" y="416" width="260" height="90" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="480" y="430" text-anchor="middle" font-size="8" fill="#3b82f6" font-weight="600" letter-spacing="0.5">DOCKER COMPOSE NETWORK</text>
+
+  <!-- Eval container -->
+  <rect x="362" y="438" width="90" height="30" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="407" y="457" text-anchor="middle" font-size="8" fill="#1e40af" font-weight="600">Eval Task</text>
+
+  <!-- Sidecar containers -->
+  <rect x="462" y="438" width="64" height="30" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="494" y="452" text-anchor="middle" font-size="7" fill="#1e40af" font-weight="600">Postgres</text>
+  <text x="494" y="462" text-anchor="middle" font-size="6.5" fill="#3b82f6">:5432</text>
+
+  <rect x="534" y="438" width="64" height="30" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+  <text x="566" y="452" text-anchor="middle" font-size="7" fill="#1e40af" font-weight="600">Playwright</text>
+  <text x="566" y="462" text-anchor="middle" font-size="6.5" fill="#3b82f6">browser</text>
+
+  <!-- Arrows between eval and sidecars -->
+  <line x1="452" y1="453" x2="460" y2="453" stroke="#93c5fd" stroke-width="1"/>
+  <text x="456" y="480" font-size="7" fill="#6b7280">healthcheck → post_start → run</text>
+
+  <text x="480" y="525" text-anchor="middle" font-size="9" fill="#6b7280">Auto-generated, auto-teardown</text>
+
+  <!-- Benchmark tags -->
+  <rect x="370" y="536" width="72" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+  <text x="406" y="548" text-anchor="middle" font-size="8" fill="#1e40af" font-weight="600">MCPMark</text>
+  <rect x="450" y="536" width="80" height="18" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+  <text x="490" y="548" text-anchor="middle" font-size="8" fill="#1e40af" font-weight="600">tau2-bench</text>
+  <text x="480" y="560" text-anchor="middle" font-size="8" fill="#9ca3af">Real DB, browser, MCP servers</text>
+
+  <!-- === DIND MODE === -->
+  <g filter="url(#shadowDeep)">
+    <rect x="660" y="372" width="270" height="198" rx="12" fill="white" stroke="#ef4444" stroke-width="1.5"/>
+    <rect x="660" y="372" width="270" height="36" rx="12" fill="url(#dindGrad)"/>
+    <rect x="660" y="396" width="270" height="12" fill="url(#dindGrad)"/>
+  </g>
+  <text x="795" y="396" text-anchor="middle" font-size="13" font-weight="700" fill="white">Docker-in-Docker Mode</text>
+
+  <!-- Outer container -->
+  <rect x="680" y="416" width="230" height="90" rx="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+  <text x="795" y="430" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="600" letter-spacing="0.5">OUTER CONTAINER</text>
+
+  <!-- Inner Docker daemon -->
+  <rect x="695" y="438" width="110" height="30" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+  <text x="750" y="452" text-anchor="middle" font-size="7" fill="#991b1b" font-weight="600">Docker Daemon</text>
+  <text x="750" y="462" text-anchor="middle" font-size="6.5" fill="#dc2626">sysbox / privileged</text>
+
+  <!-- Inner containers -->
+  <rect x="815" y="438" width="80" height="13" rx="2" fill="#fecaca"/>
+  <text x="855" y="448" text-anchor="middle" font-size="6" fill="#991b1b">inner container</text>
+  <rect x="815" y="455" width="80" height="13" rx="2" fill="#fecaca"/>
+  <text x="855" y="465" text-anchor="middle" font-size="6" fill="#991b1b">inner container</text>
+
+  <!-- Cache label -->
+  <text x="795" y="480" font-size="7" fill="#6b7280">tar cache → image preload → eval</text>
+
+  <text x="795" y="525" text-anchor="middle" font-size="9" fill="#6b7280">32 GB RAM · Isolated daemon</text>
+
+  <!-- Benchmark tags -->
+  <rect x="680" y="536" width="90" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" stroke-width="0.8"/>
+  <text x="725" y="548" text-anchor="middle" font-size="8" fill="#991b1b" font-weight="600">SWE-bench Pro</text>
+  <rect x="778" y="536" width="70" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" stroke-width="0.8"/>
+  <text x="813" y="548" text-anchor="middle" font-size="8" fill="#991b1b" font-weight="600">WebArena</text>
+  <rect x="856" y="536" width="65" height="18" rx="4" fill="#fef2f2" stroke="#fecaca" stroke-width="0.8"/>
+  <text x="888" y="548" text-anchor="middle" font-size="8" fill="#991b1b" font-weight="600">Toolathlon</text>
+  <text x="795" y="560" text-anchor="middle" font-size="8" fill="#9ca3af">Tasks spawn their own containers</text>
+
+  <!-- ==================== DESIGN PRINCIPLES (BOTTOM) ==================== -->
+  <rect x="40" y="590" width="880" height="110" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="480" y="613" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b" letter-spacing="0.5">DESIGN PRINCIPLES</text>
+
+  <!-- Principle 1 -->
+  <g transform="translate(80, 625)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">1</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">Docker is the only contract</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">No Python version, no ML framework, no Ray cluster</text>
+  </g>
+
+  <!-- Principle 2 -->
+  <g transform="translate(290, 625)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">2</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">Models are external</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">Any OpenAI-compatible API endpoint</text>
+  </g>
+
+  <!-- Principle 3 -->
+  <g transform="translate(500, 625)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">3</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">Scripts, not plugins</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">2 YAML + 1 script = complete benchmark</text>
+  </g>
+
+  <!-- Principle 4 -->
+  <g transform="translate(710, 625)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">4</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">Partial &gt; nothing</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">Failed tasks don't block successful ones</text>
+  </g>
+
+  <!-- Principle 5 (centered below) -->
+  <g transform="translate(80, 660)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">5</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">No database</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">File-based storage, ls + jq to debug</text>
+  </g>
+
+  <g transform="translate(290, 660)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">6</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">On-demand build</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">Auto-discover Dockerfile, build &amp; cache on first run</text>
+  </g>
+
+  <g transform="translate(560, 660)">
+    <circle cx="10" cy="10" r="10" fill="#6366f1" opacity="0.1"/>
+    <text x="10" y="14" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="800">7</text>
+    <text x="28" y="10" font-size="10" font-weight="700" fill="#1f2937">Benchmark code runs as-is</text>
+    <text x="28" y="24" font-size="8.5" fill="#6b7280">Bridge scripts translate; scoring logic untouched</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="480" y="714" text-anchor="middle" font-size="9" fill="#9ca3af">BenchRouter v0.4 — github.com/evolvent-ai/OpenEval</text>
+</svg>

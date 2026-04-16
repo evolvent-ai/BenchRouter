@@ -1,0 +1,28 @@
+# Generated task directories (created by generate_tasks.py / generate_all_tasks.py)
+ansible-*/
+element-*/
+flipt-*/
+future-*/
+gravitational-*/
+internetarchive-*/
+navidrome-*/
+nodebb-*/
+protonmail-*/
+qutebrowser-*/
+tutao-*/
+
+# Generated environment Dockerfiles
+environments/
+
+# Instance config files (runtime generated)
+default/instances/
+
+# Generated scripts
+register_envs.sh
+
+# mini-swe-agent (place at benchmarks/swe-bench-pro/mini-swe-agent/)
+mini-swe-agent/
+
+# Generated benchmark.yaml (populated by generate_tasks.py)
+# Users should run generate_tasks.py to create this file
+benchmark.yaml

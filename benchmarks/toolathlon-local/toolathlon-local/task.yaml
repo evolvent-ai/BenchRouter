@@ -1,0 +1,19 @@
+name: "toolathlon-local"
+command: "python /app/benchmark/run_toolathlon.py"
+description: "Toolathlon local-MCP benchmark via BenchRouter (35 tasks, no external credentials required)"
+result_file: "toolathlon_result.json"
+docker_images:
+  - "benchrouter-env-toolathlon-local:latest"
+timeout: 64800
+docker: true
+extra_env:
+  TOOLATHLON_IMAGE_NAME: "benchrouter-env-toolathlon-local:latest"
+  TOOLATHLON_REPO_DIR: "/opt/toolathlon"
+  TOOLATHLON_TASKS_FOLDER: "finalpool"
+  TOOLATHLON_TASK_LIST_FILE: "/app/benchmark/tasks/full.txt"
+  TOOLATHLON_PROVIDER: "unified"
+  TOOLATHLON_RUNNER: "containerized"
+  TOOLATHLON_RUNMODE: "quickstart"
+  TOOLATHLON_MAXSTEP: "100"
+  TOOLATHLON_WORKERS: "1"
+  TOOLATHLON_EVAL_CONFIG: "scripts/formal_run_v0.json"

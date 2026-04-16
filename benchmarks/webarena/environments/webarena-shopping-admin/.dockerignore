@@ -1,0 +1,12 @@
+webarena-src/.git
+webarena-src/__pycache__
+webarena-src/**/__pycache__
+webarena-src/.pytest_cache
+webarena-src/*.egg-info
+webarena-src/resources
+webarena-src/tests
+webarena-src/media
+webarena-src/*.ipynb
+webarena-src/*.md
+webarena-src/LICENSE
+webarena-src/.github

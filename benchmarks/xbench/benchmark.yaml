@@ -1,0 +1,6 @@
+name: "xbench"
+description: "xbench — contamination-free AI evaluation framework"
+version: "1.0.0"
+tasks:
+  - name: scienceqa
+    environment: xbench

@@ -1,0 +1,4 @@
+name: "mcpmark-pw"
+command: "python /app/benchmark/run_mcpmark.py"
+description: "MCPMark Playwright browser benchmark"
+timeout: 3600

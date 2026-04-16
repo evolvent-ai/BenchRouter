@@ -1,0 +1,6 @@
+name: "wrapped-bench"
+description: "Example of wrapping an existing benchmark with minimal changes"
+version: "1.0.0"
+tasks:
+  - name: default
+    environment: wrapped-bench

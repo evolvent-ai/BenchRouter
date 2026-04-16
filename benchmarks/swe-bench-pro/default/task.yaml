@@ -1,0 +1,4 @@
+name: "swe-bench-pro-default"
+command: "python /app/benchmark/run_swebench.py"
+description: "SWE-bench Pro: Evaluating LLM agents on long-horizon software engineering tasks"
+timeout: 3600

@@ -1,0 +1,12 @@
+name: "mcpmark"
+description: "MCPMark MCP tool-use benchmark suite — multi-turn agentic eval with MCP tool calling"
+version: "1.0.0"
+tasks:
+  - name: mcpmark-fs
+    environment: mcpmark-fs
+  - name: mcpmark-pg
+    environment: mcpmark-pg
+  - name: mcpmark-pw
+    environment: mcpmark-pw
+  - name: mcpmark-pw-webarena
+    environment: mcpmark-pw-webarena

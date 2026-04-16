@@ -1,0 +1,6 @@
+name: "tau2-airline"
+command: "python /app/benchmark/run_tau2.py"
+description: "Tau2 airline domain"
+timeout: 21600
+extra_env:
+  TAU2_DOMAIN: "airline"

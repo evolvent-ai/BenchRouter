@@ -1,0 +1,10 @@
+name: "mcpmark-pw-webarena"
+command: "python /app/benchmark/run_mcpmark.py"
+description: "MCPMark Playwright WebArena benchmark (Shopping Admin/Magento)"
+timeout: 7200
+docker: true
+docker_images:
+  - "shopping_admin_final_0719"
+extra_env:
+  PLAYWRIGHT_HEADLESS: "true"
+  PLAYWRIGHT_BROWSER: "chromium"

@@ -1,0 +1,6 @@
+name: "toolathlon-local"
+description: "Toolathlon local-MCP benchmark — evaluates LLM tool-use via MCP servers (no external credentials required)"
+version: "0.2.0"
+tasks:
+  - name: toolathlon-local
+    environment: toolathlon-local
