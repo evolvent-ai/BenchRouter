@@ -1,5 +1,6 @@
 import os
 import json
+import hashlib
 import shutil
 import tarfile
 import logging
@@ -81,11 +82,19 @@ class Registry:
         """Extract a tar.gz archive into benchmarks/{name}/ and validate structure.
 
         Extracts to a temp directory first so the old benchmark is preserved if
-        validation fails.
+        validation fails. Also records the archive's SHA-256 digest under
+        benchmarks/{name}/_archive.sha256 for provenance.
         """
         import tempfile
 
         self._validate_name(name)
+
+        # Hash the source archive for provenance.
+        archive_digest = hashlib.sha256()
+        with open(archive_path, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                archive_digest.update(chunk)
+        archive_sha256 = archive_digest.hexdigest()
 
         dest = os.path.join(self.benchmarks_dir, name)
         staging = tempfile.mkdtemp(dir=self.benchmarks_dir, prefix=f".{name}_tmp_")
@@ -139,7 +148,46 @@ class Registry:
             shutil.rmtree(staging, ignore_errors=True)
             raise
 
+        # Record archive SHA-256 alongside the extracted benchmark.
+        with open(os.path.join(dest, "_archive.sha256"), "w") as f:
+            f.write(archive_sha256 + "\n")
+
         return manifest
+
+    def get_benchmark_digest(self, name: str) -> Optional[str]:
+        """Return the recorded archive SHA-256 for a benchmark, or None."""
+        path = os.path.join(self.benchmarks_dir, name, "_archive.sha256")
+        if not os.path.exists(path):
+            return None
+        with open(path) as f:
+            return f.read().strip() or None
+
+    def snapshot_run_manifests(
+        self, run_id: str, benchmark_name: str, task_names: List[str]
+    ) -> Optional[str]:
+        """Copy benchmark.yaml and per-task task.yaml files into the run dir.
+
+        Returns the snapshot directory path so callers can record it on the
+        run record. Silently no-ops if the source files are missing.
+        """
+        src_root = os.path.join(self.benchmarks_dir, benchmark_name)
+        if not os.path.isdir(src_root):
+            return None
+        snapshot_dir = os.path.join(self.runs_dir, run_id, "manifests")
+        os.makedirs(snapshot_dir, exist_ok=True)
+
+        src_manifest = os.path.join(src_root, "benchmark.yaml")
+        if os.path.exists(src_manifest):
+            shutil.copy2(src_manifest, os.path.join(snapshot_dir, "benchmark.yaml"))
+
+        for task_name in task_names:
+            src_task = os.path.join(src_root, task_name, "task.yaml")
+            if os.path.exists(src_task):
+                task_dir = os.path.join(snapshot_dir, task_name)
+                os.makedirs(task_dir, exist_ok=True)
+                shutil.copy2(src_task, os.path.join(task_dir, "task.yaml"))
+
+        return snapshot_dir
 
     def get_benchmark(self, name: str) -> Optional[dict]:
         manifest = os.path.join(self.benchmarks_dir, name, "benchmark.yaml")

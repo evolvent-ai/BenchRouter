@@ -225,6 +225,15 @@ class EvalScheduler:
             child_job_ids.append(job_id)
             env_name = task_def.get("environment", benchmark)
 
+            # Extract seed from task config for provenance if the benchmark
+            # surfaces one. We check both a top-level `seed` field and the
+            # conventional BENCHROUTER_SEED in extra_env.
+            task_cfg = self._load_task_config(benchmark, task_def["name"])
+            seed_value = task_cfg.get("seed")
+            if seed_value is None:
+                seed_value = (task_cfg.get("extra_env") or {}).get("BENCHROUTER_SEED")
+            seed_str = None if seed_value is None else str(seed_value)
+
             job = EvalJobInfo(
                 job_id=job_id,
                 run_id=run_id,
@@ -235,6 +244,7 @@ class EvalScheduler:
                 model_endpoint=model_endpoint,
                 status=JobStatus.QUEUED,
                 created_at=now,
+                seed=seed_str,
             )
             self.jobs[job_id] = job
             self.registry.save_job(job.model_dump())
@@ -249,9 +259,20 @@ class EvalScheduler:
             child_job_ids=child_job_ids,
             task_filter=[t["name"] for t in all_tasks],
             created_at=now,
+            benchmark_digest=self.registry.get_benchmark_digest(benchmark),
         )
         self.runs[run_id] = run
         self.registry.save_run(run.model_dump())
+
+        # Snapshot benchmark.yaml and each task.yaml under runs/<run_id>/manifests/
+        # so subsequent re-uploads of the same benchmark do not silently mutate
+        # the source-of-truth referenced by this run.
+        try:
+            self.registry.snapshot_run_manifests(
+                run_id, benchmark, [t["name"] for t in all_tasks]
+            )
+        except Exception as snap_err:
+            logger.warning(f"Failed to snapshot manifests for run {run_id}: {snap_err}")
 
         # Launch parallel execution
         threading.Thread(
@@ -566,6 +587,19 @@ class EvalScheduler:
 
             env_meta = self.registry.get_environment(job.env_name)
             image_tag = env_meta["image_tag"]
+            job.image_tag = image_tag
+            # Record the resolved image content digest for provenance. If the
+            # image was built locally and never pushed, RepoDigests is empty;
+            # fall back to the local image ID (sha256:...).
+            try:
+                image_obj = self.docker_client.images.get(image_tag)
+                repo_digests = image_obj.attrs.get("RepoDigests") or []
+                job.image_digest = repo_digests[0] if repo_digests else image_obj.id
+            except Exception as digest_err:
+                logger.warning(
+                    f"Could not resolve image digest for {image_tag}: {digest_err}"
+                )
+            self.registry.save_job(job.model_dump())
 
             volumes = self._build_volumes(job, task_config)
             environment = self._build_environment_vars(job, api_key, task_config)
