@@ -30,6 +30,9 @@ class EvalJobInfo(BaseModel):
     container_id: Optional[str] = None
     error: Optional[str] = None
     created_at: Optional[str] = None
+    image_tag: Optional[str] = None
+    image_digest: Optional[str] = None
+    seed: Optional[str] = None
 
 
 class EvalRunInfo(BaseModel):
@@ -44,6 +47,7 @@ class EvalRunInfo(BaseModel):
     created_at: Optional[str] = None
     completed_at: Optional[str] = None
     error: Optional[str] = None
+    benchmark_digest: Optional[str] = None
 
 
 class SubmitEvalRequest(BaseModel):
